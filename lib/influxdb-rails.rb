@@ -79,6 +79,7 @@ module InfluxDB
         db_runtime = (payload[:db_runtime] || 0).ceil
         method = "#{payload[:controller]}##{payload[:action]}"
         hostname = Socket.gethostname
+        status = payload[:status] || 0
 
         begin
           client.write_point configuration.series_name_for_controller_runtimes, {
@@ -88,6 +89,7 @@ module InfluxDB
             tags: {
               method: method,
               server: hostname,
+              status: status,
             },
           }
 
@@ -98,6 +100,7 @@ module InfluxDB
             tags: {
               method: method,
               server: hostname,
+              status: status,
             },
           }
 
@@ -108,6 +111,7 @@ module InfluxDB
             tags: {
               method: method,
               server: hostname,
+              status: status,
             },
           }
         rescue => e
